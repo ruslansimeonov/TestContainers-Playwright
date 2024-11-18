@@ -2,7 +2,7 @@ import { GenericContainer, StartedTestContainer } from "testcontainers";
 
 let container: StartedTestContainer;
 
-export const setup = async () => {
+const globalSetup = async () => {
   container = await new GenericContainer("postgres")
     .withEnvironment({ POSTGRES_PASSWORD: "example" })
     .withExposedPorts(5432)
@@ -12,8 +12,13 @@ export const setup = async () => {
   process.env.DB_PORT = container.getMappedPort(5432).toString();
 };
 
-export const teardown = async () => {
+const globalTeardown = async () => {
   if (container) {
     await container.stop();
   }
+};
+
+export default async () => {
+  await globalSetup();
+  return globalTeardown;
 };

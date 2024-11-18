@@ -1,3 +1,3 @@
-import { teardown } from "./setup";
+import teardown from "./setup";
 
 export default teardown;

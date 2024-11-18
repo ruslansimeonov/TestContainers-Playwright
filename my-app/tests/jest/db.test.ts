@@ -8,6 +8,8 @@ jest.setTimeout(30000); // Increase the timeout for the entire test suite
 
 describe("Database tests", () => {
   let container: StartedTestContainer;
+  const execAsync = util.promisify(exec);
+
 
   beforeAll(async () => {
     try {
@@ -166,8 +168,6 @@ describe("Database tests", () => {
     await client2.end();
   });
 
-  const execAsync = util.promisify(exec);
-
   it("should recover after a network partition", async () => {
     if (!container) {
       throw new Error("Container not started");
@@ -211,7 +211,6 @@ describe("Database tests", () => {
   
     await client.end();
   });
-  
 
   it("should reconnect after database restart", async () => {
     if (!container) {
@@ -257,5 +256,20 @@ describe("Database tests", () => {
   
     await client.end();
   });
+
+  // Two audiences, developers and testers
+  // Two different databases, postgres and mysql
+  // Redis database for caching
+  // Seeding with some dummy data
+  // Improvement for developers is easy, docker running
+  // Improvement for testers automate test, test in different environtments, paralel testing, different versions
+
+  // Two different versions of postgress/msql that in one results in error in one not
+  // Authentication in newer msql is different, older versions are plain text. Nowadays is challange 
+
+  // Test against dest containers in the neweset versions vs fixed versions
+  // Different versions of an external api with different responses that return different things and /DOES NOT TAKE MORE TIME/
+
+  // 
   
 });
